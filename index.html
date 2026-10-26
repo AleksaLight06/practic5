@@ -46,13 +46,17 @@
         </div>
     </main>
 
-    <!-- Постоянный плеер внизу экрана -->
-    <div id="player-container" style="display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 15, 25, 0.95); padding: 15px 20px; box-sizing: border-box; border-top: 1px solid #6a5acd; backdrop-filter: blur(10px); z-index: 1000;">
-        <div style="max-width: 800px; margin: 0 auto; display: flex; align-items: center; gap: 15px;">
-            <span id="current-track-title" style="color: #00d4ff; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;">Ничего не играет</span>
-            <audio id="audio-player" controls style="flex: 1; height: 40px; outline: none;"></audio>
+    <!-- Плеер внизу экрана -->
+    <div id="player-container" style="display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: #0f0f19; padding: 15px; box-sizing: border-box; border-top: 2px solid #6a5acd; z-index: 9999; text-align: center;">
+        <div style="max-width: 600px; margin: 0 auto;">
+            <div id="current-track-title" style="color: #00d4ff; margin-bottom: 10px; font-weight: bold;">Выберите трек</div>
+            <audio id="audio-player" controls style="width: 100%; outline: none;"></audio>
         </div>
     </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
 
     <script src="script.js"></script>
 </body>
