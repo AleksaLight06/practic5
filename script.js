@@ -4,7 +4,7 @@ sessionStorage.clear();
 const defaultAlbums = [
     {
         id: "1", artist: "Ado", title: "Kyogen", year: 2022, genre: "J-Pop", 
-        cover: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><rect width='60' height='60' fill='%23ff6b9d'/><text x='50%' y='55%' font-size='30' text-anchor='middle' fill='white'>🎤</text></svg>",
+        cover: "ado.jpg",
         tracks: [
             { name: "Rule", duration: "3:45", isFavorite: false, file: "Ado-RuLe.mp3" },
             { name: "Show", duration: "3:09", isFavorite: false, file: "Ado-Show.mp3" },
@@ -13,7 +13,7 @@ const defaultAlbums = [
     },
     {
         id: "2", artist: "IC3PEAK", title: "Kiss of Death", year: 2020, genre: "Experimental", 
-        cover: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><rect width='60' height='60' fill='%232d2d2d'/><text x='50%' y='55%' font-size='30' text-anchor='middle' fill='white'>⚡</text></svg>",
+        cover: "ic3peak.jpg",
         tracks: [
             { name: "TRRST", duration: "3:10", isFavorite: false, file: "IC3PEAKi-TRRST.mp3" },
             { name: "Целую твой труп", duration: "3:24", isFavorite: false, file: "IC3PEAK-YA_celuyu_tvojj_trup.mp3" },
@@ -22,7 +22,7 @@ const defaultAlbums = [
     },
     {
         id: "3", artist: "Halsey", title: "Badlands", year: 2015, genre: "Alternative", 
-        cover: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><rect width='60' height='60' fill='%2300d4ff'/><text x='50%' y='55%' font-size='30' text-anchor='middle' fill='white'>🌙</text></svg>",
+        cover: "halsey.jpg",
         tracks: [
             { name: "Castle", duration: "4:20", isFavorite: false, file: "Halsey-Castle.mp3" },
             { name: "Control", duration: "3:34", isFavorite: false, file: "Halsey-Control.mp3" },
@@ -70,11 +70,9 @@ function renderAlbums() {
             card.classList.add('selected');
         }
 
-        let coverSrc = album.cover;
-
         card.innerHTML = `
             <div class="album-header">
-                <img src="${coverSrc}" class="album-cover">
+                <img src="${album.cover}" class="album-cover" onerror="this.style.display='none'">
                 <div class="album-info">
                     <h3>${album.artist} — ${album.title}</h3>
                     <p>${album.year} • ${album.genre}</p>
@@ -193,19 +191,14 @@ albumsContainer.addEventListener('click', (e) => {
         if (player.src.includes(file)) {
             if (player.paused) {
                 player.play();
-                e.target.textContent = "⏸";
             } else {
                 player.pause();
-                e.target.textContent = "▶";
             }
         } else {
-            document.querySelectorAll('.play-btn').forEach(btn => btn.textContent = "▶");
-            
             player.src = file;
             player.play();
             playerContainer.style.display = 'block';
             currentTrackTitle.textContent = name;
-            e.target.textContent = "⏸";
         }
     }
 });
