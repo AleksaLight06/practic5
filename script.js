@@ -3,8 +3,7 @@ sessionStorage.clear();
 
 const defaultAlbums = [
     {
-        id: "1", artist: "Ado", title: "Kyogen", year: 2022, genre: "J-Pop", 
-        cover: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><rect width='60' height='60' fill='%23ff6b9d'/><text x='50%' y='55%' font-size='30' text-anchor='middle' fill='white'>🎤</text></svg>",
+        id: "1", artist: "Ado", title: "Kyogen", year: 2022, genre: "J-Pop", cover: "ado.jpg",
         tracks: [
             { name: "Rule", duration: "3:45", isFavorite: false, file: "Ado-RuLe.mp3" },
             { name: "Show", duration: "3:09", isFavorite: false, file: "Ado-Show.mp3" },
@@ -12,8 +11,7 @@ const defaultAlbums = [
         ]
     },
     {
-        id: "2", artist: "IC3PEAK", title: "Kiss of Death", year: 2020, genre: "Experimental", 
-        cover: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><rect width='60' height='60' fill='%232d2d2d'/><text x='50%' y='55%' font-size='30' text-anchor='middle' fill='white'>⚡</text></svg>",
+        id: "2", artist: "IC3PEAK", title: "Kiss of Death", year: 2020, genre: "Experimental", cover: "ic3peak.jpg",
         tracks: [
             { name: "TRRST", duration: "3:10", isFavorite: false, file: "IC3PEAKi-TRRST.mp3" },
             { name: "Целую твой труп", duration: "3:24", isFavorite: false, file: "IC3PEAK-YA_celuyu_tvojj_trup.mp3" },
@@ -21,8 +19,7 @@ const defaultAlbums = [
         ]
     },
     {
-        id: "3", artist: "Halsey", title: "Badlands", year: 2015, genre: "Alternative", 
-        cover: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><rect width='60' height='60' fill='%2300d4ff'/><text x='50%' y='55%' font-size='30' text-anchor='middle' fill='white'>🌙</text></svg>",
+        id: "3", artist: "Halsey", title: "Badlands", year: 2015, genre: "Alternative", cover: "halsey.jpg",
         tracks: [
             { name: "Castle", duration: "4:20", isFavorite: false, file: "Halsey-Castle.mp3" },
             { name: "Control", duration: "3:34", isFavorite: false, file: "Halsey-Control.mp3" },
@@ -44,8 +41,8 @@ const sortSelect = document.getElementById('sort-select');
 const albumForm = document.getElementById('album-form');
 const tempTracksList = document.getElementById('temp-tracks-list');
 const player = document.getElementById('audio-player');
-const playerContainer = document.getElementById('player-container');
-const currentTrackTitle = document.getElementById('current-track-title');
+const playerBox = document.getElementById('player-box');
+const playerTrackName = document.getElementById('player-track-name');
 
 function saveToLocalStorage() {
     localStorage.setItem('music_albums', JSON.stringify(albums));
@@ -64,7 +61,7 @@ function renderAlbums() {
     sortedAlbums.forEach(album => {
         const card = document.createElement('div');
         card.className = "album-card";
-        
+
         const currentSessionAlbum = sessionStorage.getItem('selected_album');
         if (currentSessionAlbum === album.id) {
             card.classList.add('selected');
@@ -92,9 +89,9 @@ function renderAlbums() {
                 `).join('')}
             </div>
         `;
-        
+
         card.addEventListener('click', (e) => {
-            if(e.target.tagName === 'BUTTON') return;
+            if (e.target.tagName === 'BUTTON') return;
             sessionStorage.setItem('selected_album', album.id);
             renderAlbums();
         });
@@ -106,7 +103,7 @@ function renderAlbums() {
 document.getElementById('add-track-btn').addEventListener('click', () => {
     const nameInput = document.getElementById('track-name');
     const durInput = document.getElementById('track-duration');
-    
+
     const name = nameInput.value.trim();
     const duration = durInput.value.trim();
     const durationRegex = /^[0-9]{1,2}:[0-5][0-9]$/;
@@ -118,12 +115,12 @@ document.getElementById('add-track-btn').addEventListener('click', () => {
     tempTracks.push({ name, duration, isFavorite: false });
     nameInput.value = '';
     durInput.value = '';
-    
+
     renderTempTracks();
 });
 
 function renderTempTracks() {
-    tempTracksList.innerHTML = tempTracks.map((t, i) => 
+    tempTracksList.innerHTML = tempTracks.map((t, i) =>
         `<div class="temp-track">${t.name} (${t.duration}) <button type="button" onclick="removeTempTrack(${i})">x</button></div>`
     ).join('');
 }
@@ -135,7 +132,7 @@ window.removeTempTrack = (index) => {
 
 albumForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    
+
     const artist = document.getElementById('artist').value.trim();
     const title = document.getElementById('title').value.trim();
     const year = document.getElementById('year').value;
@@ -149,13 +146,13 @@ albumForm.addEventListener('submit', (e) => {
     const newAlbum = {
         id: Date.now().toString(),
         artist, title, year: parseInt(year), genre,
-        cover: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><rect width='60' height='60' fill='%236a5acd'/><text x='50%' y='55%' font-size='30' text-anchor='middle' fill='white'>♪</text></svg>",
+        cover: `${artist.toLowerCase()}.jpg`,
         tracks: [...tempTracks]
     };
 
     albums.push(newAlbum);
     saveToLocalStorage();
-    
+
     albumForm.reset();
     tempTracks = [];
     renderTempTracks();
@@ -176,10 +173,10 @@ albumsContainer.addEventListener('click', (e) => {
         const trackEl = e.target.closest('.track');
         const albumId = trackEl.dataset.album;
         const trackIdx = trackEl.dataset.track;
-        
+
         const album = albums.find(a => a.id === albumId);
         album.tracks[trackIdx].isFavorite = !album.tracks[trackIdx].isFavorite;
-        
+
         saveToLocalStorage();
         renderAlbums();
     }
@@ -197,8 +194,8 @@ albumsContainer.addEventListener('click', (e) => {
         } else {
             player.src = file;
             player.play();
-            playerContainer.style.display = 'block';
-            currentTrackTitle.textContent = name;
+            playerBox.style.display = 'flex';
+            playerTrackName.textContent = name;
         }
     }
 });

@@ -12,6 +12,16 @@
     </header>
 
     <main>
+        <section class="player-section">
+            <div id="player-box" class="player-box" style="display: none;">
+                <div class="player-info">
+                    <span class="playing-label">Сейчас играет:</span>
+                    <span id="player-track-name">Название трека</span>
+                </div>
+                <audio id="audio-player" controls></audio>
+            </div>
+        </section>
+
         <div class="controls">
             <select id="sort-select">
                 <option value="default">Без сортировки</option>
@@ -22,6 +32,7 @@
 
         <div class="layout">
             <section id="albums-section" class="albums-list">
+                <!-- Карточки альбомов -->
             </section>
 
             <section class="add-section">
@@ -45,14 +56,6 @@
             </section>
         </div>
     </main>
-
-    <!-- Плеер внизу экрана -->
-    <div id="player-container" style="display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: #0f0f19; padding: 15px; box-sizing: border-box; border-top: 2px solid #6a5acd; z-index: 9999; text-align: center;">
-        <div style="max-width: 600px; margin: 0 auto;">
-            <div id="current-track-title" style="color: #00d4ff; margin-bottom: 10px; font-weight: bold;">Выберите трек</div>
-            <audio id="audio-player" controls style="width: 100%; outline: none;"></audio>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 </body>
