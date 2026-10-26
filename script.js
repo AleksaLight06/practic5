@@ -44,6 +44,8 @@ const sortSelect = document.getElementById('sort-select');
 const albumForm = document.getElementById('album-form');
 const tempTracksList = document.getElementById('temp-tracks-list');
 const player = document.getElementById('audio-player');
+const playerContainer = document.getElementById('player-container');
+const currentTrackTitle = document.getElementById('current-track-title');
 
 function saveToLocalStorage() {
     localStorage.setItem('music_albums', JSON.stringify(albums));
@@ -86,7 +88,7 @@ function renderAlbums() {
                         <span class="track-dur">${track.duration}</span>
                         <div class="track-actions">
                             <button class="fav-btn" title="В избранное">${track.isFavorite ? '★' : '☆'}</button>
-                            ${track.file ? `<button class="play-btn" data-file="${encodeURI(track.file)}">▶</button>` : ''}
+                            ${track.file ? `<button class="play-btn" data-file="${encodeURI(track.file)}" data-name="${track.name}">▶</button>` : ''}
                         </div>
                     </div>
                 `).join('')}
@@ -185,9 +187,51 @@ albumsContainer.addEventListener('click', (e) => {
     }
 
     if (e.target.classList.contains('play-btn')) {
-        player.src = e.target.dataset.file;
-        player.play().catch(() => {});
+        const file = e.target.dataset.file;
+        const name = e.target.dataset.name;
+
+        if (player.src.includes(file)) {
+            if (player.paused) {
+                player.play();
+                e.target.textContent = "⏸";
+            } else {
+                player.pause();
+                e.target.textContent = "▶";
+            }
+        } else {
+            document.querySelectorAll('.play-btn').forEach(btn => btn.textContent = "▶");
+            
+            player.src = file;
+            player.play();
+            playerContainer.style.display = 'block';
+            currentTrackTitle.textContent = name;
+            e.target.textContent = "⏸";
+        }
     }
+});
+
+player.addEventListener('play', () => {
+    const playingFile = player.src.split('/').pop();
+    document.querySelectorAll('.play-btn').forEach(btn => {
+        if (btn.dataset.file === playingFile) {
+            btn.textContent = "⏸";
+        } else {
+            btn.textContent = "▶";
+        }
+    });
+});
+
+player.addEventListener('pause', () => {
+    const playingFile = player.src.split('/').pop();
+    document.querySelectorAll('.play-btn').forEach(btn => {
+        if (btn.dataset.file === playingFile) {
+            btn.textContent = "▶";
+        }
+    });
+});
+
+player.addEventListener('ended', () => {
+    document.querySelectorAll('.play-btn').forEach(btn => btn.textContent = "▶");
 });
 
 sortSelect.addEventListener('change', renderAlbums);
