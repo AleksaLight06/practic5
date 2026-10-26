@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог музыкальных альбомов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🎵 Каталог музыкальных альбомов</h1>
+    </header>
+
+    <main>
+        <div class="controls">
+            <select id="sort-select">
+                <option value="default">Без сортировки</option>
+                <option value="year">По году (сначала новые)</option>
+                <option value="artist">По исполнителю (А-Я)</option>
+            </select>
+        </div>
+
+        <div class="layout">
+            <section id="albums-section" class="albums-list">
+            </section>
+
+            <section class="add-section">
+                <h2>Добавить альбом</h2>
+                <form id="album-form">
+                    <input type="text" id="artist" placeholder="Исполнитель" required>
+                    <input type="text" id="title" placeholder="Название альбома" required>
+                    <input type="number" id="year" placeholder="Год выпуска" min="1900" max="2026" required>
+                    <input type="text" id="genre" placeholder="Жанр" required>
+                    
+                    <h3>Треки (необязательно)</h3>
+                    <div id="temp-tracks-list" class="temp-tracks"></div>
+                    <div class="track-form">
+                        <input type="text" id="track-name" placeholder="Название трека">
+                        <input type="text" id="track-duration" placeholder="Мин:Сек (3:45)">
+                        <button type="button" id="add-track-btn">+ Трек</button>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Сохранить альбом</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <audio id="audio-player"></audio>
+    <script src="script.js"></script>
+</body>
+</html>

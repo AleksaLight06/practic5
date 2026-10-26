@@ -1,0 +1,293 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-image: url('wall.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    color: #eaeaea;
+    padding-bottom: 50px;
+}
+
+header {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+    header h1 {
+        font-size: 2.5rem;
+        color: #fff;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+    }
+
+.controls {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px;
+    max-width: 1200px;
+    margin: 0 auto 20px;
+}
+
+select {
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(20, 20, 30, 0.9);
+    color: #fff;
+    border: 1px solid #6a5acd;
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+@media (max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.albums-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.album-card {
+    background: rgba(15, 15, 25, 0.85);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+    .album-card.selected {
+        border-color: #00d4ff;
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    }
+
+.album-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.album-cover {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.2);
+}
+
+.album-info {
+    flex: 1;
+}
+
+    .album-info h3 {
+        color: #ff6b9d;
+        font-size: 1.3rem;
+    }
+
+    .album-info p {
+        color: #a0a0c0;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+
+.delete-album {
+    background: rgba(255, 50, 50, 0.2);
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    .delete-album:hover {
+        background: #ff6b6b;
+        color: #fff;
+    }
+
+.track {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+    .track:hover {
+        background: rgba(255,255,255,0.1);
+    }
+
+    .track.fav .track-name {
+        color: #ffd700;
+    }
+
+.track-name {
+    flex: 1;
+    font-weight: 600;
+}
+
+.track-dur {
+    color: #a0a0c0;
+    font-size: 0.9rem;
+}
+
+.track-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.fav-btn, .play-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .fav-btn:hover {
+        color: #ffd700;
+        transform: scale(1.2);
+    }
+
+.play-btn {
+    background: rgba(106, 90, 205, 0.5);
+    font-size: 0.9rem;
+}
+
+    .play-btn:hover {
+        background: #6a5acd;
+        transform: scale(1.1);
+    }
+
+.add-section {
+    background: rgba(15, 15, 25, 0.9);
+    padding: 20px;
+    border-radius: 15px;
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+    .add-section h2 {
+        margin-bottom: 15px;
+        font-size: 1.3rem;
+        color: #00d4ff;
+    }
+
+    .add-section input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #fff;
+    }
+
+        .add-section input:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+
+    .add-section h3 {
+        font-size: 1rem;
+        margin: 15px 0 10px;
+        color: #a0a0c0;
+    }
+
+.temp-tracks {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    color: #ff6b9d;
+}
+
+.temp-track {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    background: rgba(255,255,255,0.05);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+    .temp-track button {
+        background: none;
+        border: none;
+        color: #ff6b6b;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+.track-form {
+    display: grid;
+    grid-template-columns: 1fr 80px auto;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+    .track-form input {
+        margin: 0;
+    }
+
+    .track-form button {
+        background: #6a5acd;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+        .track-form button:hover {
+            background: #5a4cb0;
+        }
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #6a5acd, #00d4ff);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    .submit-btn:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+    }
